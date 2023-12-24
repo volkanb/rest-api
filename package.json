@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    
+    "build": "tsc",
+    "start-server": "node dist/server.js"
   },
   "repository": {
     "type": "git",
@@ -15,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/volkanb/rest-api/issues"
   },
-  "homepage": "https://github.com/volkanb/rest-api#readme"
+  "homepage": "https://github.com/volkanb/rest-api#readme",
+  "devDependencies": {
+    "typescript": "^5.3.3"
+  }
 }
