@@ -3,8 +3,10 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   CreateDateColumn,
-  UpdateDateColumn
+  UpdateDateColumn,
+  ManyToOne
 } from 'typeorm';
+import { Course } from './course';
 
 @Entity({
   name: "LESSONS"
@@ -22,6 +24,9 @@ export class Lesson {
 
   @Column()
   seqNo: number;
+
+  @ManyToOne(() => Course, course => course.lessons)
+  course: Course;
 
   @CreateDateColumn()
   createdAt: Date;
