@@ -4,9 +4,9 @@ const result = dotenv.config();
 import 'reflect-metadata';
 import { COURSES } from './db-data';
 import { AppDataSource } from '../data-source';
-import { DeepPartial } from "typeorm";
-import { Course } from "./course";
-import { Lesson } from "./lesson";
+import { DeepPartial } from 'typeorm';
+import { Course } from './course';
+import { Lesson } from './lesson';
 
 async function populateDb() {
   await AppDataSource.initialize();
