@@ -1,4 +1,4 @@
-import * as dotenv from "dotenv";
+import * as dotenv from 'dotenv';
 const result = dotenv.config();
 
 if(result.error) {
@@ -10,9 +10,9 @@ import 'reflect-metadata';
 import * as express from 'express';
 import { root } from './routes/root';
 import { isInteger } from './utils';
-import { logger } from "./logger";
-import { AppDataSource } from "./data-source";
-import { getAllCourses } from "./routes/get-all-courses";
+import { logger } from './logger';
+import { AppDataSource } from './data-source';
+import { getAllCourses } from './routes/get-all-courses';
 
 const app = express();
 
