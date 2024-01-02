@@ -8,8 +8,6 @@ export async function getAllCourses(request: Request, response: Response, next:N
   try {
     logger.debug(`Called getAllCourses()`);
 
-    throw {error: "Thrown ERROR!"};
-
     const courses = await AppDataSource
       .getRepository(Course)
       .createQueryBuilder("courses")
