@@ -15,8 +15,7 @@ export async function getAllCourses(request: Request, response: Response, next:N
       .getMany();
 
     response.status(200).json({courses});
-  }
-  catch (error) {
+  } catch (error) {
     logger.error(`Error calling getAllCourses()`);
     return next(error);
   }
