@@ -4,10 +4,11 @@ import { isInteger } from '../utils';
 import { AppDataSource } from '../data-source';
 import { Course } from '../models/course';
 
-/**
- * 
+/** 
  * curl -X PATCH http://localhost:9000/api/courses/76 -H "Content-Type:application/json" -d '{"title":"Typescript Bootcamp v2"}'
  */
+
+
 export async function updateCourse(request: Request, response: Response, next: NextFunction) {
   try {
     logger.debug(`Called updateCourse()`);
