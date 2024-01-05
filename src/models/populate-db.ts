@@ -2,11 +2,13 @@ import * as dotenv from "dotenv";
 const result = dotenv.config();
 
 import 'reflect-metadata';
-import { COURSES } from './db-data';
+import { COURSES, USERS } from './db-data';
 import { AppDataSource } from '../data-source';
 import { DeepPartial } from 'typeorm';
 import { Course } from './course';
 import { Lesson } from './lesson';
+import { User } from "./user";
+import { calculatePasswordHash } from "../utils";
 
 async function populateDb() {
   await AppDataSource.initialize();
@@ -15,6 +17,8 @@ async function populateDb() {
   const courses = Object.values(COURSES) as DeepPartial<Course>[];
   const courseRepository = AppDataSource.getRepository(Course);
   const lessonRepository = AppDataSource.getRepository(Lesson);
+  const userRepository = AppDataSource.getRepository(User);
+
 
   for (let courseData of courses) {
     console.log(`Inserting course ${courseData.title}`);
@@ -29,6 +33,28 @@ async function populateDb() {
     }
   }
 
+  const users = Object.values(USERS) as any[];
+
+  for(let userData of users) {
+    console.log(`Inserting user: ${userData}`);
+
+    const {email, pictureUrl, isAdmin, passwordSalt, plainTextPassword} = userData;
+
+    const user = AppDataSource
+      .getRepository(User)
+      .create({
+        email,
+        pictureUrl,
+        isAdmin,
+        passwordSalt,
+        passwordHash: await calculatePasswordHash(
+          plainTextPassword, passwordSalt
+        )
+      });
+    
+    await AppDataSource.manager.save(user);
+  }
+
   const totalCourses = await courseRepository
     .createQueryBuilder()
     .getCount();
@@ -37,7 +63,11 @@ async function populateDb() {
     .createQueryBuilder()
     .getCount();
 
-  console.log(`Data Inserted - courses ${totalCourses}, lessons ${totalLessons}`);
+  const totalUsers = await userRepository
+  .createQueryBuilder()
+  .getCount();
+
+  console.log(`Data Inserted - courses ${totalCourses}, lessons ${totalLessons}, users ${totalUsers}`);
 }
 
 populateDb()
